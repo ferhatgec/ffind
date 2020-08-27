@@ -14,6 +14,7 @@ class FFind {
 public:
 	void Find(std::string);
 	void FindWithoutCategorize(std::string);
+	void FindWithoutColorize(std::string);
 };
 
 #endif // FIND_HPP

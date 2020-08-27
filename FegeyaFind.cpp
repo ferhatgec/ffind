@@ -13,7 +13,8 @@
 void HelpFunction() {
 	std::cout << "Fegeya Find Arguments\n" <<
 	"ffind --a || --all <file> : Categorized and colorized\n" <<
-	"ffind --whc || --withoutcategorize <file> : Uncategorized and colorized. Only [File] and [Dir]\n";
+	"ffind --whca || --withoutcategorize <file> : Uncategorized and colorized. Only [File] and [Dir]\n" <<
+	"ffind -- whco || --withoutcolorize <file> : Categorized and uncolorized.\n";
 }
 
 void VersionFunction() {
@@ -23,6 +24,7 @@ void VersionFunction() {
 /*
 	type = 1 : Categorized and colorized.
 	type = 2 : Uncategorized and colorized. Only [File] and [Dir]
+	type = 3 : Categorized and uncolorized.	
 	...
 */
 void Categorize(std::string file, int type) {
@@ -31,6 +33,8 @@ void Categorize(std::string file, int type) {
 		find.Find(file);
 	else if(type == 2)
 		find.FindWithoutCategorize(file);
+	else if(type == 3)
+		find.FindWithoutColorize(file);
 	else
 		std::cout << "Error: This type undefined.\n";
 }
@@ -52,8 +56,14 @@ int main(int argc, char** argv) {
 	if(reg.substr(0, 2) == "--") {
 	    if(reg == "--a" || reg == "--all") /* Standart. */
 		Categorize(copy_arg, 1); /* type = 1 */
-    	    else if(reg == "--whc" || reg == "--withoutcategorize")
+    	    else if(reg == "--whca" || reg == "--withoutcategorize")
     		Categorize(copy_arg, 2); /* type = 2 */
+	    else if(reg == "--whco" || reg == "--withoutcolorize")
+		Categorize(copy_arg, 3);
+	    else if(reg == "--h" || reg == "--help")
+		HelpFunction();
+	    else if(reg == "--v" || reg == "--version")
+		VersionFunction();
      	    else	
     		Categorize(copy_arg, 1); /* type = 1 */
 	   /*else if(reg == "--h" || reg == "--help")
