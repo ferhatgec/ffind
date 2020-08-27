@@ -14,7 +14,8 @@ void HelpFunction() {
 	std::cout << "Fegeya Find Arguments\n" <<
 	"ffind --a || --all <file> : Categorized and colorized\n" <<
 	"ffind --whca || --withoutcategorize <file> : Uncategorized and colorized. Only [File] and [Dir]\n" <<
-	"ffind -- whco || --withoutcolorize <file> : Categorized and uncolorized.\n";
+	"ffind --whco || --withoutcolorize <file> : Categorized and uncolorized.\n" <<
+	"ffind --whcc || --withoutcategorizeandcolorize : Uncategorized and uncolorized. Only [File] and [Dir]\n";
 }
 
 void VersionFunction() {
@@ -24,7 +25,8 @@ void VersionFunction() {
 /*
 	type = 1 : Categorized and colorized.
 	type = 2 : Uncategorized and colorized. Only [File] and [Dir]
-	type = 3 : Categorized and uncolorized.	
+	type = 3 : Categorized and uncolorized.
+	type = 4 : Uncategorized and uncolorized. Only [File] and [Dir]
 	...
 */
 void Categorize(std::string file, int type) {
@@ -35,6 +37,8 @@ void Categorize(std::string file, int type) {
 		find.FindWithoutCategorize(file);
 	else if(type == 3)
 		find.FindWithoutColorize(file);
+	else if(type == 4)
+		find.FindWithoutColorizeAndCategorize(file);
 	else
 		std::cout << "Error: This type undefined.\n";
 }
@@ -47,7 +51,6 @@ int main(int argc, char** argv) {
 			reg = argv[1];
 			copy_arg = arg;
 		}
-	
         } else {
         	HelpFunction();
 	}
@@ -60,18 +63,15 @@ int main(int argc, char** argv) {
     		Categorize(copy_arg, 2); /* type = 2 */
 	    else if(reg == "--whco" || reg == "--withoutcolorize")
 		Categorize(copy_arg, 3);
+	    else if(reg == "--whcc" || reg == "--withoutcategorizeandcolorize")
+		Categorize(copy_arg, 4);
 	    else if(reg == "--h" || reg == "--help")
 		HelpFunction();
 	    else if(reg == "--v" || reg == "--version")
 		VersionFunction();
      	    else	
     		Categorize(copy_arg, 1); /* type = 1 */
-	   /*else if(reg == "--h" || reg == "--help")
-		// HelpFunction()
-	   else if(reg == "--v" || reg == "--version")
-		// VersionFunction()
-	   else
-	        // HelpFunction()*/
 	} else Categorize(copy_arg, 1);
+
 	return 0;
 } 

@@ -15,6 +15,7 @@ public:
 	void Find(std::string);
 	void FindWithoutCategorize(std::string);
 	void FindWithoutColorize(std::string);
+	void FindWithoutColorizeAndCategorize(std::string);
 };
 
 #endif // FIND_HPP

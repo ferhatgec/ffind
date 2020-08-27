@@ -294,3 +294,27 @@ FFind::FindWithoutColorize(std::string name) {
     }
     closedir(directory);
 }
+
+
+void 
+FFind::FindWithoutColorizeAndCategorize(std::string name) {
+    DIR *directory;
+    struct dirent *entryname;
+    struct stat filestat;
+    directory = opendir(Directory(name).c_str());
+    if(directory == NULL) {
+        std::cout << "Error: Directory not found.\n";
+        return;
+    }
+    while ((entryname = readdir(directory))) {
+        stat(entryname->d_name, &filestat);
+        if(entryname->d_type == DT_DIR) {// DT_DIR -> directory
+            if(strstr(entryname->d_name, ".")) {} else if(strstr(entryname->d_name, "..")) {} 
+	    else if(strstr(entryname->d_name, name.c_str()))
+            	printf("%4s: %s\n", "[Dir]", entryname->d_name);
+        } 
+        else if(strstr(entryname->d_name, name.c_str()))
+            printf("%4s: %s\n", "[File]", entryname->d_name);
+    }
+    closedir(directory);
+}
